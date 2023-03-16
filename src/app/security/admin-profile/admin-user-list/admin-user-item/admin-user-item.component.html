@@ -1,0 +1,9 @@
+<div class="container mt-2">
+  <div class="d-flex justify-content-between">
+    <h2>{{user.email}}</h2>
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-warning me-2" [routerLink]="[user.id,'edit']">Edit</button>
+      <button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button>
+    </div>
+  </div>
+</div>

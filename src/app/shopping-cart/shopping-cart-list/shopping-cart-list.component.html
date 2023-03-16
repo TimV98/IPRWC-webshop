@@ -1,0 +1,10 @@
+<div class="container">
+  <div *ngIf="shoppingCart.length < 1">
+    <h6>Your cart seems empty! Head over to the product section to fill your cart!</h6>
+  </div>
+  <div *ngIf="shoppingCart.length >= 1" class="list-group">
+    <div class="list-group-item" *ngFor="let item of shoppingCart; let i = index">
+      <app-shopping-cart-item (itemEmitter)="checkQuantity(i)" [item]="item"></app-shopping-cart-item>
+    </div>
+  </div>
+</div>

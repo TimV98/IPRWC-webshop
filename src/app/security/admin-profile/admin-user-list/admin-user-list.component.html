@@ -1,0 +1,7 @@
+<div class="container mt-2">
+  <div class="d-flex flex-column list-group">
+    <div class="flex-row list-group-item" *ngFor="let user of users">
+      <app-admin-user-item (userDeletedEmitter)="deleteUserFromList($event)" [user]="user"></app-admin-user-item>
+    </div>
+  </div>
+</div>

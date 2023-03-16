@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex flex-row gap-2">
+        <button class="btn btn-warning" routerLink="../../">Terug</button>
+        <h1>Editing {{user.email}}</h1>
+      </div>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="userForm" (ngSubmit)="editUser()" *ngIf="userForm">
+        <div class="input-group mb-3">
+          <label class="input-group-text col-2">First name:</label>
+          <input class="form-control" type="text" formControlName="firstName">
+        </div>
+        <div class="input-group mb-3">
+          <label class="input-group-text col-2">Prefix:</label>
+          <input class="form-control" type="text" formControlName="prefix">
+        </div>
+        <div class="input-group mb-3">
+          <label class="input-group-text col-2">Last name:</label>
+          <input class="form-control" type="text" formControlName="lastName">
+        </div>
+        <div class="input-group mb-3">
+          <label class="input-group-text col-2">Street:</label>
+          <input class="form-control" type="text" formControlName="street">
+        </div>
+        <div class="input-group mb-3">
+          <label class="input-group-text col-2">Housenumber:</label>
+          <input class="form-control" type="number" formControlName="houseNumber">
+        </div>
+        <div class="input-group mb-3">
+          <label class="input-group-text col-2">Zipcode:</label>
+          <input class="form-control" type="text" formControlName="zipCode">
+        </div>
+        <div class="input-group mb-3">
+          <label class="input-group-text col-2">Place:</label>
+          <input class="form-control" type="text" formControlName="place">
+        </div>
+        <div class="input-group mb-3">
+          <label class="input-group-text col-2">Phonenumber:</label>
+          <input class="form-control" type="tel" formControlName="phoneNumber">
+        </div>
+        <div class="d-flex justify-content-end flex-grow-1">
+          <button class="btn btn-primary col-2">Edit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

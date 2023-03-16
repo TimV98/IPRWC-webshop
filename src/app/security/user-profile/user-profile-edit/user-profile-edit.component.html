@@ -1,0 +1,53 @@
+<div class="container mt-5">
+  <div class="offset-2 ">
+    <div class="row-cols-md-1 ms-5 ">
+      <div class="ms-5 mb-5">
+        <div class="ms-5">
+          <div class="card mx-2 w-50">
+            <div class="card-header d-flex flex-row gap-2">
+              <button routerLink="../" class="btn btn-warning">Terug</button>
+              <h1 class="f">Profiel wijzigen</h1>
+            </div>
+            <form (ngSubmit)="editProfile()" [formGroup]="profileForm" *ngIf="profileForm">
+              <div class="card-body">
+                <div class="input-group mb-2" [formGroup]="profileForm">
+                  <label class="input-group-text"> Firstname </label>
+                  <input class="form-control" formControlName="firstName">
+                  </div>
+                  <div class="input-group mb-2">
+                    <label class="input-group-text">Tussenvoegsel:</label>
+                    <input class="form-control" formControlName="prefix">
+                  </div>
+                  <div class="input-group mb-2">
+                    <label class="input-group-text">Achternaam:</label>
+                    <input class="form-control" formControlName="lastName">
+                  </div>
+                <div class="input-group mb-2">
+                  <label class="input-group-text"> Street</label>
+                  <input class="form-control me-2" formControlName="street">
+                </div>
+                <div class="input-group mb-2">
+                  <label class="input-group-text"> Housenumber</label>
+                  <input class="form-control me-2" formControlName="houseNumber">
+                </div>
+                <div class="input-group mb-2">
+                  <label class="input-group-text"> Zipcode</label>
+                  <input class="form-control me-2" formControlName="zipCode">
+                </div>
+                <div class="input-group mb-2">
+                  <label class="input-group-text"> Place</label>
+                  <input class="form-control me-2 " formControlName="place">
+                </div>
+                <div class="input-group mb-2">
+                  <label class="input-group-text">Phonenumber:</label>
+                  <input class="form-control" formControlName="phoneNumber">
+                </div>
+                <button class="btn btn-primary mt-2 d-flex justify-content-end">Edit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="container mt-5 ps-5">
+  <div class="w-75 ms-5 ps-5">
+    <div class="card bg-light-subtle">
+      <h1 class="card-header ">Welcome to your profile {{user.firstName}}</h1>
+      <div class="card-body">
+        <div class="d-flex align-items-start flex-column mx-2">
+          <h3>E-mail:</h3>
+          <div class="d-flex">
+            <p class="fs-3">{{user.email}}</p>
+          </div>
+          <h3>Name:</h3>
+          <div class=" d-flex">
+            <p class="fs-3">{{user.firstName}}</p>
+            <p class="fs-3 mx-1" *ngIf="user.prefix != null">{{user.prefix}}</p>
+            <p class="fs-3 mx-1">{{user.lastName}}</p>
+          </div>
+          <h3>Address:</h3>
+          <div class="d-flex">
+            <p class="fs-3">{{user.street}} {{user.houseNumber}}, {{user.zipCode}} {{user.place}} </p>
+          </div>
+          <h3>Phonenumber:</h3>
+          <div class="d-flex">
+            <p class="fs-3">+31{{user.phoneNumber}}</p>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary me-1" routerLink="edit"> Edit Profile</button>
+            <button class="btn btn-info" (click)="fetchAndNavigateToOrders()">Orders</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
