@@ -72,8 +72,7 @@
               "browserTarget": "IPRWC-webshop:build:production"
             },
             "development": {
-              "browserTarget": "IPRWC-webshop:build:development",
-              "proxyConfig": "src/proxy.config.json"
+              "browserTarget": "IPRWC-webshop:build:development"
             }
           },
           "defaultConfiguration": "development"
