@@ -5,8 +5,9 @@ import {LoginCredentials} from "../models/LoginCredentials";
 import {SingupRequest} from "../models/SingupRequest";
 import * as CryptoJS from 'crypto-js';
 import {Router} from "@angular/router";
+import {environment} from "../../environments/environment.prod";
 
-const AUTH_API = 'http://localhost:8080/api/auth/';
+const AUTH_API =  environment.API_URL + environment.AUTH;
 
 @Injectable({
   providedIn: 'root'

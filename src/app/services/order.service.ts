@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Order} from "../models/Order";
+import {environment} from "../../environments/environment.prod";
 
-const ORDER_API: string = "http://localhost:8080/api/orders/";
+const ORDER_API: string = environment.API_URL + environment.ORDERS;
 
 
 

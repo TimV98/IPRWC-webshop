@@ -5,9 +5,10 @@ import {HttpClient} from "@angular/common/http";
 import {ShoppingCartItem} from "../models/ShoppingCartItem";
 import {UserService} from "./user.service";
 import {BehaviorSubject} from "rxjs";
+import {environment} from "../../environments/environment.prod";
 
 
-const ORDER_API: string = "http://localhost:8080/api/orders/";
+const ORDER_API: string = environment.API_URL + environment.ORDERS;
 
 @Injectable({
   providedIn: 'root'
