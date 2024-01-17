@@ -23,7 +23,7 @@ export class ShoppingCartService {
 
   isCartEmpty: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  constructor(private http: HttpClient, private userService: UserService) {
+  constructor(private http: HttpClient) {
   }
 
   sendCartStatus(value: boolean) {

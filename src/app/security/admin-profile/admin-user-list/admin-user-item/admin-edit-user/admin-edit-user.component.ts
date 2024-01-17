@@ -55,15 +55,17 @@ export class AdminEditUserComponent implements OnInit {
     this.user.place = this.userForm.value.place;
     this.user.zipCode = this.userForm.value.zipCode;
     this.user.phoneNumber = this.userForm.value.phoneNumber;
-    this.userService.editUser(this.user).subscribe({
+    this.userService.adminEditUser(this.user).subscribe({
       next: () => {
         this.toastr.success("User has been edited!", "User Edited!")
-        this.router.navigate(['./'])
+        this.router.navigate(['/admin/userlist'])
       }, error: (err) => {
         if (err.status == 500) {
           this.toastr.error("Something went wrong!", "Error")
         }
       }
     });
+    this.toastr.success("User has been edited!", "User Edited!")
+    this.router.navigate(['/admin/userlist'])
   }
 }

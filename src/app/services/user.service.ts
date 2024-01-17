@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {User} from "../models/User";
-import {environment} from "../../environments/environment.prod";
+import {environment, environmentDev} from "../../environments/environment.prod";
 
 
-const USER_API = environment.API_URL + environment.USER;
+// const USER_API = environmentDev.API_URL + environment.USER;
+const USER_API = "http://localhost:8080/api/user/";
 
 
 @Injectable({
@@ -34,6 +35,11 @@ export class UserService {
 
   editUser(user: User) {
     return this.http.put(USER_API + 'edit/me', user)
+
+  }
+
+  adminEditUser(user: User) {
+    return this.http.put(USER_API + 'edit/' + user.id, user)
 
   }
 

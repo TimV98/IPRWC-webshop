@@ -37,12 +37,14 @@ export class AdminItemFormComponent implements OnInit {
             product_name: new FormControl(this.product.product_name, [Validators.required, Validators.nullValidator]),
             price: new FormControl(this.product.price, [Validators.required, Validators.nullValidator]),
             genre: new FormControl(this.product.genre, [Validators.required, Validators.nullValidator]),
+            age_rating: new FormControl(this.product.age_rating, [Validators.required, Validators.nullValidator]),
             description: new FormControl(this.product.description, [Validators.required, Validators.nullValidator]),
             image: new FormControl(null, [RxwebValidators.extension({extensions: ["jpeg", "png", "jpg"]})])
           })
           this.productForm.value.product_name = data.product_name;
           this.productForm.value.price = data.price;
           this.productForm.value.genre = data.genre;
+          this.productForm.value.age_rating = data.age_rating
           this.productForm.value.description = data.description;
           this.productForm.value.image = data.image?.name;
         }
@@ -51,6 +53,7 @@ export class AdminItemFormComponent implements OnInit {
       this.productForm = new FormGroup({
         product_name: new FormControl('', [Validators.required, Validators.nullValidator]),
         price: new FormControl('', [Validators.required, Validators.nullValidator]),
+        age_rating: new FormControl('', [Validators.required, Validators.nullValidator]),
         genre: new FormControl('', [Validators.required, Validators.nullValidator]),
         description: new FormControl(''),
         image: new FormControl('', [Validators.required,])
@@ -82,6 +85,7 @@ export class AdminItemFormComponent implements OnInit {
     this.submitted = true;
     this.product.product_name = this.productForm.value.product_name;
     this.product.price = this.productForm.value.price;
+    this.product.age_rating = this.productForm.value.age_rating;
     this.product.genre = this.productForm.value.genre;
     this.product.description = this.productForm.value.description;
     const productForm = new FormData();
@@ -99,13 +103,15 @@ export class AdminItemFormComponent implements OnInit {
           }
         }
       });
-      this.toastr.success("Your product has been edited!", "Product added")
+      this.toastr.success("Your product has been edited!", "Product edited")
       this.router.navigate(['/admin/products'])
     } else {
       this.productService.addProduct(productForm).subscribe({
         next: () => {
           this.toastr.success("Your product has been added!", "Product added")
-          this.router.navigate(['/admin/products'])
+          setTimeout(()=>{
+            this.router.navigate(['/admin/products'])
+          },500)
         },
         error: (err) => {
           if (err.status == 500 || err.status == 400) {
