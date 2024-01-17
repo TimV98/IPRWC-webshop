@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../../../services/user.service";
 import {User} from "../../../../../models/User";
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
@@ -29,14 +29,16 @@ export class AdminEditUserComponent implements OnInit {
           next: data => {
             this.user = this.userService.user = data
             this.userForm = new FormGroup({
-              firstName: new FormControl(this.user.firstName),
+              firstName: new FormControl(this.user.firstName, Validators.required),
               prefix: new FormControl(this.user.prefix),
-              lastName: new FormControl(this.user.lastName),
-              street: new FormControl(this.user.street),
-              houseNumber: new FormControl(this.user.houseNumber),
-              zipCode: new FormControl(this.user.zipCode),
-              place: new FormControl(this.user.place),
-              phoneNumber: new FormControl(this.user.phoneNumber)
+              lastName: new FormControl(this.user.lastName, Validators.required),
+              street: new FormControl(this.user.street, Validators.required),
+              houseNumber: new FormControl(this.user.houseNumber, Validators.required),
+              zipCode: new FormControl(this.user.zipCode,
+                [Validators.required, Validators.pattern(/^\d{4}\s?\w{2}$/)]),
+              place: new FormControl(this.user.place, Validators.required),
+              phoneNumber: new FormControl(this.user.phoneNumber,
+                [Validators.required, Validators.pattern(/^(\+\d{1,2}\s?)?1?-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{3}$/)])
             })
           }
         })
@@ -54,14 +56,14 @@ export class AdminEditUserComponent implements OnInit {
     this.user.zipCode = this.userForm.value.zipCode;
     this.user.phoneNumber = this.userForm.value.phoneNumber;
     this.userService.editUser(this.user).subscribe({
-        next: () => {
-          this.toastr.success("User has been edited!", "User Edited!")
-          this.router.navigate(['./'])
-        }, error: (err) => {
-          if (err.status == 500) {
-            this.toastr.error("Something went wrong!", "Error")
-          }
+      next: () => {
+        this.toastr.success("User has been edited!", "User Edited!")
+        this.router.navigate(['./'])
+      }, error: (err) => {
+        if (err.status == 500) {
+          this.toastr.error("Something went wrong!", "Error")
         }
-      });
+      }
+    });
   }
 }

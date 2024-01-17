@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ShoppingCartItem} from "../../../../../../models/ShoppingCartItem";
 import {Order} from "../../../../../../models/Order";
 import {OrderService} from "../../../../../../services/order.service";
@@ -18,12 +18,11 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
-      this.orderService.getOrderFromUser(params['id']).subscribe((data) => {
+    this.route.paramMap.subscribe((params) => {
+      this.orderService.getOrderFromUser(Number(params.get('id'))).subscribe((data: Order) => {
         this.order = this.orderService.order = data;
       })
     })
   }
 }
-
 

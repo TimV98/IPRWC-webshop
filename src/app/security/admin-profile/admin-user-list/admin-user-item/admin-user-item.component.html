@@ -1,9 +1,11 @@
 <div class="container mt-2">
-  <div class="d-flex justify-content-between">
-    <h2>{{user.email}}</h2>
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-warning me-2" [routerLink]="[user.id,'edit']">Edit</button>
-      <button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button>
+  <div class="col-12 col-md-12">
+    <div class="d-flex justify-content-between">
+      <p>{{user.email}}</p>
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-warning me-2" [routerLink]="[user.id,'edit']"><i class="bi-pencil"></i></button>
+        <button class="btn btn-danger" (click)="deleteUser(user.id)"><i class="bi-trash"></i></button>
+      </div>
     </div>
   </div>
 </div>

@@ -1,8 +1,9 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../../models/User";
 import {UserService} from "../../../services/user.service";
 import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-user-profile-edit',
@@ -15,21 +16,23 @@ export class UserProfileEditComponent implements OnInit {
 
   profileForm: FormGroup
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService, private router: Router, private toastr: ToastrService) {
   }
 
   ngOnInit() {
     this.userService.getUserProfile().subscribe((data: User) => {
         this.user = this.userService.user = data;
         this.profileForm = new FormGroup({
-          firstName: new FormControl(this.user.firstName),
+          firstName: new FormControl(this.user.firstName, Validators.required),
           prefix: new FormControl(this.user.prefix),
-          lastName: new FormControl(this.user.lastName),
-          street: new FormControl(this.user.street),
-          houseNumber: new FormControl(this.user.houseNumber),
-          zipCode: new FormControl(this.user.zipCode),
-          place: new FormControl(this.user.place),
-          phoneNumber: new FormControl(this.user.phoneNumber)
+          lastName: new FormControl(this.user.lastName, Validators.required),
+          street: new FormControl(this.user.street, Validators.required),
+          houseNumber: new FormControl(this.user.houseNumber, Validators.required),
+          zipCode: new FormControl(this.user.zipCode,
+            [Validators.pattern(/^\d{4}\s?\w{2}$/), Validators.required]),
+          place: new FormControl(this.user.place, Validators.required),
+          phoneNumber: new FormControl(this.user.phoneNumber, [Validators.required,
+            Validators.pattern(/^(\+\d{1,2}\s?)?1?-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{3}$/)])
         })
 
         this.profileForm.value.firstName = data.firstName;
@@ -52,7 +55,14 @@ export class UserProfileEditComponent implements OnInit {
     this.user.place = this.profileForm.value.place;
     this.user.zipCode = this.profileForm.value.zipCode;
     this.user.phoneNumber = this.profileForm.value.phoneNumber;
-    this.userService.editUser(this.user).subscribe();
-    this.router.navigate(['/profile'])
+    this.userService.editUser(this.user).subscribe(()=>{
+      this.toastr.success("Your profile has been edited", "Profile edited")
+      this.router.navigate(['/profile'])
+    },(error)=>{
+      if (error.status == 400 || error.status == 500 ){
+        this.toastr.error("Something went wrong!","Error")
+      }
+    });
+
   }
 }

@@ -11,16 +11,15 @@ import {Observable} from "rxjs";
 })
 export class OrderListItemComponent {
 
-  @Input() order: Order;
+  @Input() order: Order = this.orderService.order;
   orderObservable: Observable<Order>
 
 
-  constructor(private orderService: OrderService, private route :ActivatedRoute) {
+  constructor(private orderService: OrderService,) {
   }
 
   ngOnInit() {
     this.orderService.order = this.order;
-    console.log(this.orderService.order)
   }
 
 

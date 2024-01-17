@@ -10,6 +10,7 @@ import {Product} from "../models/Product.model";
 export class ProductsComponent implements OnInit{
 
   public products: Product[] = this.productService.products;
+  public photo: string;
 
   constructor(private productService: ProductService) {
   }
@@ -19,6 +20,5 @@ export class ProductsComponent implements OnInit{
     this.productService.getAllProducts().subscribe((products: Product[]) => {
       this.products = this.productService.products = products;
     });
-
   }
 }

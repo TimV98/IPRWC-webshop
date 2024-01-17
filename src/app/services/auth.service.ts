@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, catchError, throwError} from "rxjs";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {BehaviorSubject} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 import {LoginCredentials} from "../models/LoginCredentials";
 import {SingupRequest} from "../models/SingupRequest";
 import * as CryptoJS from 'crypto-js';
@@ -13,13 +13,15 @@ const AUTH_API = 'http://localhost:8080/api/auth/';
 })
 export class AuthService {
 
+
+
   private isLoggedInSubject = new BehaviorSubject<boolean>(false)
 
-  private isAdmin = new BehaviorSubject<boolean>(false)
+  private _isAdmin = new BehaviorSubject<boolean>(false)
 
   failedLogin: boolean;
 
-  private _role: string;
+  private _roles: string[];
 
   key: string = "secretKey";
 
@@ -42,7 +44,7 @@ export class AuthService {
 
   logout() {
     this.sendLoginStatus(false)
-    this.sendAdmin();
+    this.isAdmin;
     localStorage.clear();
     this.router.navigate(['/login']);
   }
@@ -64,32 +66,37 @@ export class AuthService {
     return this.isLoggedInSubject.asObservable();
   }
 
-
-  sendAdmin() {
-    if (this.decryptRole(localStorage.getItem('role')!) === "ROLE_ADMIN") {
-      this.isAdmin.next(true);
-    } else {
-      this.isAdmin.next(false)
-    }
-  }
+  //
+  // sendAdmin() {
+  //   if (this.decryptRoles(localStorage.getItem('role')!) === "ROLE_ADMIN") {
+  //     this._isAdmin.next(true);
+  //   } else {
+  //     this._isAdmin.next(false)
+  //   }
+  // }
 
   getAdmin() {
-    return this.isAdmin.asObservable()
+    return this._isAdmin.asObservable()
   }
 
-  encryptRole(text: string) {
-    return CryptoJS.AES.encrypt(text, this.key).toString()
+ parseToken(token:string){
+   return JSON.parse(window.atob((token.split('.')[1])))
+ }
+
+
+  get roles(): string[] {
+    return this._roles;
   }
 
-  decryptRole(text: string) {
-    return CryptoJS.AES.decrypt(text, this.key).toString(CryptoJS.enc.Utf8)
+  set roles(value: string[]) {
+    this._roles = value;
   }
 
-  get role(): string {
-    return this._role;
+  get isAdmin(): BehaviorSubject<boolean> {
+    return this._isAdmin;
   }
 
-  set role(value: string) {
-    this._role = value;
+  set isAdmin(value: BehaviorSubject<boolean>) {
+    this._isAdmin = value;
   }
 }

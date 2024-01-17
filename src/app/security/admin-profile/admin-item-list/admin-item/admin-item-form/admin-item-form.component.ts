@@ -4,7 +4,7 @@ import {ProductService} from "../../../../../services/product.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
-import {HttpSentEvent} from "@angular/common/http";
+import {RxwebValidators} from "@rxweb/reactive-form-validators";
 
 @Component({
   selector: 'app-admin-item-form',
@@ -36,22 +36,24 @@ export class AdminItemFormComponent implements OnInit {
           this.productForm = new FormGroup({
             product_name: new FormControl(this.product.product_name, [Validators.required, Validators.nullValidator]),
             price: new FormControl(this.product.price, [Validators.required, Validators.nullValidator]),
-            product_rating: new FormControl(this.product.product_rating, [Validators.required, Validators.nullValidator]),
+            genre: new FormControl(this.product.genre, [Validators.required, Validators.nullValidator]),
             description: new FormControl(this.product.description, [Validators.required, Validators.nullValidator]),
+            image: new FormControl(null, [RxwebValidators.extension({extensions: ["jpeg", "png", "jpg"]})])
           })
           this.productForm.value.product_name = data.product_name;
           this.productForm.value.price = data.price;
-          this.productForm.value.product_rating = data.product_rating;
+          this.productForm.value.genre = data.genre;
           this.productForm.value.description = data.description;
+          this.productForm.value.image = data.image?.name;
         }
       })
     } else {
       this.productForm = new FormGroup({
-        product_name: new FormControl(),
-        price: new FormControl(),
-        product_rating: new FormControl(),
-        description: new FormControl(),
-        image: new FormControl()
+        product_name: new FormControl('', [Validators.required, Validators.nullValidator]),
+        price: new FormControl('', [Validators.required, Validators.nullValidator]),
+        genre: new FormControl('', [Validators.required, Validators.nullValidator]),
+        description: new FormControl(''),
+        image: new FormControl('', [Validators.required,])
       })
     }
   }
@@ -66,31 +68,50 @@ export class AdminItemFormComponent implements OnInit {
     })
   }
 
+  onFileChange(event: any) {
+
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.productForm.patchValue({
+        image: file
+      });
+    }
+  }
+
   submitForm() {
     this.submitted = true;
     this.product.product_name = this.productForm.value.product_name;
     this.product.price = this.productForm.value.price;
-    this.product.product_rating = this.productForm.value.product_rating;
+    this.product.genre = this.productForm.value.genre;
     this.product.description = this.productForm.value.description;
+    const productForm = new FormData();
+    productForm.append('image', this.productForm.value.image)
+    productForm.append('product', JSON.stringify(this.product))
+
     if (this.idPresent) {
-      this.productService.editProduct(this.id, this.product).subscribe({next: (product) => {
-        this.toastr.success("Your product has been added!", "Product added")
-        this.router.navigate(['/admin/products'])
-      },
-        error: (e) => {
-        if(e.status == 500){
-          this.toastr.error("Something went wrong!", "Error")
+      this.productService.editProduct(this.id, productForm).subscribe({
+        next: () => {
+
+        },
+        error: (err) => {
+          if (err.status == 500 || err.status == 400) {
+            this.toastr.error("Something went wrong!", "Error")
+          }
         }
-        }});
+      });
+      this.toastr.success("Your product has been edited!", "Product added")
+      this.router.navigate(['/admin/products'])
     } else {
-      this.productService.addProduct(this.product).subscribe({next:() => {
-        this.toastr.success("Your product has been added!", "Product added")
-        this.router.navigate(['/admin/products'])
-      },
-      error: (err) => {
-      if (err.status == 500){
-        this.toastr.error("Something went wrong!", "Error")
-      }}
+      this.productService.addProduct(productForm).subscribe({
+        next: () => {
+          this.toastr.success("Your product has been added!", "Product added")
+          this.router.navigate(['/admin/products'])
+        },
+        error: (err) => {
+          if (err.status == 500 || err.status == 400) {
+            this.toastr.error("Something went wrong!", "Error")
+          }
+        }
       });
     }
   }

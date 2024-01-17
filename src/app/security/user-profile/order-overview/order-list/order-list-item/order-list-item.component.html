@@ -1,3 +1,5 @@
 <div class="container">
-  <h4>Order Id: {{order.id}}</h4>
+  <li class="list-group-item list-group-item-action" [routerLink]="order.order.id + '/details'">
+  <h4>Order Id: {{order.order.id}}</h4>
+  </li>
 </div>

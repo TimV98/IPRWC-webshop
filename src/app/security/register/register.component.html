@@ -1,54 +1,112 @@
-<div class="container-lg">
-  <div class="col-lg-7 ms-5">
-    <div class="mt-5 ms-5 ">
+<div class="container mt-4 d-flex justify-content-center">
+  <div class="col-md-12 col-lg-8 ">
       <div class="card">
         <div class="card-header d-flex flex-row gap-2">
-          <button class="btn btn-warning" routerLink="/login">Terug</button>
+          <button class="btn btn-outline-danger " routerLink="/login"><i class="bi bi-arrow-left"></i>Terug</button>
           <h1>Register</h1>
         </div>
         <form (ngSubmit)="register()" [formGroup]="registerForm">
           <div class="card-body">
             <div class="input-group mb-2">
-              <label class="input-group-text col-3 col-lg-2"> E-mail</label>
-              <input class="form-control me-2" formControlName="email" type="email">
-            </div>
-            <div class="input-group mb-2 ">
-              <label class="input-group-text col-3 col-lg-2"> Password</label>
-              <input class="form-control me-2" type="password" formControlName="password">
-            </div>
-            <div class="input-group mb-2">
-              <label class="input-group-text col-3 col-lg-2"> Name</label>
-              <input class="form-control" formControlName="firstName">
-              <label class="input-group-text col-1 col-lg-1">Prefix</label>
-              <input class="form-control" formControlName="prefix">
-              <label class="input-group-text col-2 col-lg-2">Surname</label>
-              <input class="form-control me-2" formControlName="lastName">
+              <label class="input-group-text col-3 col-md-2"> E-mail</label>
+              <input
+                [ngClass]="{'is-invalid': registerForm.controls['email'].invalid && registerForm.controls['email'].dirty}"
+                class="form-control me-2" formControlName="email" type="email">
+              <div *ngIf="registerForm.controls['email'].errors?.['required']" class="invalid-feedback">
+                <p>Email can't be empty</p>
+              </div>
+              <div *ngIf="registerForm.controls['email'].errors?.['email']" class="invalid-feedback">
+                <p>This is not an email address</p>
+              </div>
             </div>
             <div class="input-group mb-2">
-              <label class="input-group-text col-3 col-lg-2"> Street</label>
-              <input class="form-control w-25" formControlName="street">
+              <label class="input-group-text col-4 col-md-2">Password</label>
+              <input
+                [ngClass]="{'is-invalid': registerForm.controls['password'].invalid && registerForm.controls['password'].dirty}"
+                class="form-control me-2" type="password" formControlName="password">
+              <div *ngIf="registerForm.controls['password'].errors?.['required']" class="invalid-feedback">
+                <p>Password can't be empty</p>
+              </div>
+              <div *ngIf="registerForm.controls['password'].errors?.['minlength']" class="invalid-feedback">
+                <p>Password must at least be 6 characters long!</p>
+              </div>
+            </div>
+            <div class="input-group mb-2">
+              <label class="input-group-text col-3 col-md-2"> Name</label>
+              <input
+                [ngClass]="{'is-invalid': registerForm.controls['firstName'].invalid && registerForm.controls['firstName'].dirty}"
+                class="form-control" formControlName="firstName">
+              <label class="input-group-text col-3 col-md-2 col-lg-1">Prefix</label>
+              <input class="form-control " formControlName="prefix">
+              <label class="input-group-text col-3 col-md-2">Surname</label>
+              <input
+                [ngClass]="{'is-invalid': registerForm.controls['lastName'].invalid && registerForm.controls['lastName'].dirty}"
+                class="form-control me-2" formControlName="lastName">
+              <div
+                *ngIf="registerForm.controls['firstName'].errors?.['required'] || registerForm.controls['lastName'].errors?.['required']
+                && registerForm.controls['firstName'].dirty && registerForm.controls['lastName'].dirty"
+                class="invalid-feedback">
+                <p>Name can't be empty</p>
+              </div>
+            </div>
+            <div class="input-group mb-2">
+              <label class="input-group-text col-3 col-md-2"> Street</label>
+              <input
+                [ngClass]="{'is-invalid': registerForm.controls['street'].invalid && registerForm.controls['street'].dirty}"
+                class="form-control w-25" formControlName="street">
               <label class="input-group-text col-lg-1">Nr.</label>
-              <input class="form-control me-2" formControlName="houseNumber">
+              <input
+                [ngClass]="{'is-invalid': registerForm.controls['houseNumber'].invalid && registerForm.controls['houseNumber'].dirty}"
+                class="form-control me-2" formControlName="houseNumber">
+              <div
+                *ngIf="registerForm.controls['houseNumber'].errors?.['required'] && registerForm.controls['street'].errors?.['required']
+                 && registerForm.controls['houseNumber'].dirty && registerForm.controls['street'].dirty"
+                class="invalid-feedback">
+                <p>Street or housenumber can't be empty</p>
+              </div>
             </div>
-
             <div class="input-group mb-2">
-              <label class="input-group-text col-lg-2"> Zipcode</label>
-              <input class="form-control me-2" formControlName="zipCode">
+              <label class="input-group-text col-md-2"> Zipcode</label>
+              <input
+                [ngClass]="{'is-invalid': registerForm.controls['zipCode'].invalid && registerForm.controls['zipCode'].dirty}"
+                class="form-control me-2" formControlName="zipCode">
+              <div *ngIf="registerForm.controls['zipCode'].errors?.['required']" class="invalid-feedback">
+                <p>Zip code can't be empty</p>
+              </div>
+              <div *ngIf="registerForm.controls['zipCode'].errors?.['pattern']" class="invalid-feedback">
+                <p>Zip code is in the wrong format!</p>
+              </div>
             </div>
             <div class="input-group mb-2">
-              <label class="input-group-text col-lg-2">Place</label>
-              <input class="form-control me-2 " formControlName="place">
+              <label class="input-group-text col-3 col-md-2">Place</label>
+              <input
+                [ngClass]="{'is-invalid': registerForm.controls['place'].invalid && registerForm.controls['place'].dirty}"
+                class="form-control me-2 " formControlName="place">
+              <div *ngIf="registerForm.controls['place'].errors?.['required']" class="invalid-feedback">
+                <p>Place can't be empty</p>
+              </div>
             </div>
             <div class="input-group mb-2">
-              <label class="input-group-text col-2 col-lg-2">Phone</label>
-              <input class="form-control me-2" formControlName="phoneNumber">
+              <label class="input-group-text col-3 col-md-2">Phone</label>
+              <input
+                [ngClass]="{'is-invalid': registerForm.controls['phoneNumber'].invalid && registerForm.controls['phoneNumber'].dirty}"
+                class="form-control me-2" formControlName="phoneNumber">
+              <div *ngIf="registerForm.controls['phoneNumber'].errors?.['PhoneNumberValidator']"
+                   class="invalid-feedback">
+                <p>Invalid Phonenumber</p>
+              </div>
+              <div *ngIf="registerForm.controls['phoneNumber'].errors?.['required']" class="invalid-feedback">
+                <p>Phonenumber can't be empty</p>
+              </div>
+              <div *ngIf="registerForm.controls['phoneNumber'].errors?.['pattern']" class="invalid-feedback">
+                <p>Wrong phonenumber format, please use the format: 6XXXXXXXX</p>
+              </div>
             </div>
             <div class="d-flex justify-content-end">
-              <button class="btn btn-primary" [disabled]="!registerForm.dirty">Register</button>
+              <button class="btn btn-primary" [disabled]="registerForm.invalid">Register</button>
             </div>
           </div>
         </form>
       </div>
-    </div>
   </div>
 </div>

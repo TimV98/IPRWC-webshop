@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SingupRequest} from "../../models/SingupRequest";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
@@ -21,16 +21,19 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = new FormGroup({
-      email: new FormControl(),
-      password: new FormControl(),
-      firstName: new FormControl(),
-      prefix: new FormControl(),
-      lastName: new FormControl(),
-      street: new FormControl(),
-      houseNumber: new FormControl(),
-      zipCode: new FormControl(),
-      place: new FormControl(),
-      phoneNumber: new FormControl()
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+      firstName: new FormControl(null, Validators.required),
+      prefix: new FormControl(null),
+      lastName: new FormControl(null, Validators.required),
+      street: new FormControl(null, Validators.required),
+      houseNumber: new FormControl(null, Validators.required),
+      zipCode: new FormControl(null,
+        [Validators.pattern(/^\d{4}\s?\w{2}$/), Validators.required]),
+      place: new FormControl(null, Validators.required),
+      phoneNumber: new FormControl(null,
+        [Validators.pattern(/^(\+\d{1,2}\s?)?1?-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{3}$/),
+          Validators.required])
     })
 
   }

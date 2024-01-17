@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {User} from "../models/User";
 
@@ -33,7 +32,7 @@ export class UserService {
 
 
   editUser(user: User) {
-    return this.http.put(USER_API + 'edit', user)
+    return this.http.put(USER_API + 'edit/me', user)
 
   }
 

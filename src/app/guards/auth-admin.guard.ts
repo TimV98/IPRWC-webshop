@@ -24,15 +24,19 @@ export class AuthAdminGuard implements CanActivate, CanActivateChild {
     const token = localStorage.getItem('token')
 
     if (token) {
-      console.log(this.auth.decryptRole(localStorage.getItem('role')!) === "ROLE_ADMIN")
-
-      if (this.auth.decryptRole(localStorage.getItem('role')!) === "ROLE_ADMIN" && token) {
+      const parsedToken: {
+        sub: string,
+        iat: number,
+        exp: number,
+        roles: string[]
+      } = this.auth.parseToken(token)
+      const adminRole: string | undefined = parsedToken.roles.find((role: string) => role === "ROLE_ADMIN")
+      if (adminRole) {
         return true
       }
     }
-
     this.auth.sendLoginStatus(false)
-    this.auth.sendAdmin()
+    // this.auth.sendAdmin()
     this.router.navigate(['/login']);
     return false;
   }
@@ -42,13 +46,11 @@ export class AuthAdminGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const token = localStorage.getItem('token')
 
-    if (token) {
+    if (token)
+      // if (this.auth.decryptRoles(localStorage.getItem('role')!) === "ROLE_ADMIN" && token)
+      return true
 
-      if (this.auth.decryptRole(localStorage.getItem('role')!) === "ROLE_ADMIN" && token) {
-        return true
-      }
-    }
-    this.auth.sendAdmin()
+
     return false;
   }
 

@@ -45,9 +45,7 @@ export class ShoppingCartService {
 
   createOrder() {
     this.order = new Order();
-    this.order.products = this._shoppingCart;
-    this.order.user = this.userService.user;
-    console.log(this.order);
+    this.order.order.products = this._shoppingCart;
   }
 
   postOrder() {

@@ -1,53 +1,84 @@
-<div class="container mt-5">
-  <div class="offset-2 ">
-    <div class="row-cols-md-1 ms-5 ">
-      <div class="ms-5 mb-5">
-        <div class="ms-5">
-          <div class="card mx-2 w-50">
+<div class="container mt-4 d-flex justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6">
+          <div class="card mx-2">
             <div class="card-header d-flex flex-row gap-2">
-              <button routerLink="../" class="btn btn-warning">Terug</button>
+              <button routerLink="../" class="btn btn-warning"><i class="bi bi-arrow-left"></i> Terug</button>
               <h1 class="f">Profiel wijzigen</h1>
             </div>
             <form (ngSubmit)="editProfile()" [formGroup]="profileForm" *ngIf="profileForm">
               <div class="card-body">
                 <div class="input-group mb-2" [formGroup]="profileForm">
                   <label class="input-group-text"> Firstname </label>
-                  <input class="form-control" formControlName="firstName">
+                  <input class="form-control" formControlName="firstName"
+                         [ngClass]="{'is-invalid': profileForm.controls['firstName'].invalid}">
+                  <div *ngIf="profileForm.controls['firstName'].errors?.['required']" class="invalid-feedback">
+                    <p>First name can't be empty</p>
                   </div>
-                  <div class="input-group mb-2">
-                    <label class="input-group-text">Tussenvoegsel:</label>
-                    <input class="form-control" formControlName="prefix">
+                </div>
+                <div class="input-group mb-2">
+                  <label class="input-group-text">Tussenvoegsel:</label>
+                  <input class="form-control" formControlName="prefix">
+                </div>
+                <div class="input-group mb-2">
+                  <label class="input-group-text">Achternaam:</label>
+                  <input class="form-control" formControlName="lastName"
+                         [ngClass]="{'is-invalid': profileForm.controls['lastName'].invalid}">
+                  <div *ngIf="profileForm.controls['lastName'].errors?.['required']" class="invalid-feedback">
+                    <p>Last name can't be empty</p>
                   </div>
-                  <div class="input-group mb-2">
-                    <label class="input-group-text">Achternaam:</label>
-                    <input class="form-control" formControlName="lastName">
-                  </div>
+                </div>
                 <div class="input-group mb-2">
                   <label class="input-group-text"> Street</label>
-                  <input class="form-control me-2" formControlName="street">
+                  <input class="form-control me-2" formControlName="street"
+                         [ngClass]="{'is-invalid': profileForm.controls['street'].invalid}">
+                  <div *ngIf="profileForm.controls['street'].errors?.['required']" class="invalid-feedback">
+                    <p>Street can't be empty</p>
+                  </div>
                 </div>
                 <div class="input-group mb-2">
                   <label class="input-group-text"> Housenumber</label>
-                  <input class="form-control me-2" formControlName="houseNumber">
+                  <input class="form-control me-2" formControlName="houseNumber"
+                         [ngClass]="{'is-invalid': profileForm.controls['houseNumber'].invalid}">
+                  <div *ngIf="profileForm.controls['houseNumber'].errors?.['required']" class="invalid-feedback">
+                    <p>Housenumber can't be empty</p>
+                  </div>
                 </div>
                 <div class="input-group mb-2">
                   <label class="input-group-text"> Zipcode</label>
-                  <input class="form-control me-2" formControlName="zipCode">
+                  <input class="form-control me-2" formControlName="zipCode"
+                         [ngClass]="{'is-invalid': profileForm.controls['zipCode'].invalid}">
+                  <div *ngIf="profileForm.controls['zipCode'].errors?.['required']" class="invalid-feedback">
+                    <p>Postal code can't be empty</p>
+                  </div>
+                  <div *ngIf="profileForm.controls['zipCode'].errors?.['pattern']" class="invalid-feedback">
+                    <p>Postal code is in the wrong format!</p>
+                  </div>
                 </div>
                 <div class="input-group mb-2">
                   <label class="input-group-text"> Place</label>
-                  <input class="form-control me-2 " formControlName="place">
+                  <input class="form-control me-2 " formControlName="place"
+                         [ngClass]="{'is-invalid': profileForm.controls['place'].invalid}">
+                  <div *ngIf="profileForm.controls['place'].errors?.['required']" class="invalid-feedback">
+                    <p>Place can't be empty</p>
+                  </div>
                 </div>
                 <div class="input-group mb-2">
                   <label class="input-group-text">Phonenumber:</label>
-                  <input class="form-control" formControlName="phoneNumber">
+                  <input class="form-control" formControlName="phoneNumber"
+                         [ngClass]="{'is-invalid': profileForm.controls['phoneNumber'].invalid}">
+                  <div *ngIf="profileForm.controls['phoneNumber'].errors?.['PhoneNumberValidator']"
+                       class="invalid-feedback">
+                    <p>Invalid Phonenumber</p>
+                  </div>
+                  <div *ngIf="profileForm.controls['phoneNumber'].errors?.['required']" class="invalid-feedback">
+                    <p>Phonenumber can't be empty</p>
+                  </div>
                 </div>
-                <button class="btn btn-primary mt-2 d-flex justify-content-end">Edit</button>
+                <button class="btn btn-primary mt-2 d-flex justify-content-end"
+                        [disabled]="profileForm.invalid">Edit
+                </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>

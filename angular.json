@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "crypto-js"
+            ],
             "outputPath": "dist/iprwc-webshop",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -32,7 +35,8 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {
@@ -68,7 +72,8 @@
               "browserTarget": "IPRWC-webshop:build:production"
             },
             "development": {
-              "browserTarget": "IPRWC-webshop:build:development"
+              "browserTarget": "IPRWC-webshop:build:development",
+              "proxyConfig": "src/proxy.config.json"
             }
           },
           "defaultConfiguration": "development"

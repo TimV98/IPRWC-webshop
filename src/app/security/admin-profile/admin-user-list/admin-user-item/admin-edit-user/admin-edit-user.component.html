@@ -1,49 +1,89 @@
 <div class="container">
-  <div class="card">
-    <div class="card-header">
-      <div class="d-flex flex-row gap-2">
-        <button class="btn btn-warning" routerLink="../../">Terug</button>
-        <h1>Editing {{user.email}}</h1>
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="d-flex flex-row gap-2">
+          <button class="btn btn-outline-danger" routerLink="../../"><i class="bi bi-arrow-left"></i> Terug</button>
+          <p class="fw-bold">Editing {{user.email}}</p>
+        </div>
       </div>
-    </div>
-    <div class="card-body">
-      <form [formGroup]="userForm" (ngSubmit)="editUser()" *ngIf="userForm">
-        <div class="input-group mb-3">
-          <label class="input-group-text col-2">First name:</label>
-          <input class="form-control" type="text" formControlName="firstName">
-        </div>
-        <div class="input-group mb-3">
-          <label class="input-group-text col-2">Prefix:</label>
-          <input class="form-control" type="text" formControlName="prefix">
-        </div>
-        <div class="input-group mb-3">
-          <label class="input-group-text col-2">Last name:</label>
-          <input class="form-control" type="text" formControlName="lastName">
-        </div>
-        <div class="input-group mb-3">
-          <label class="input-group-text col-2">Street:</label>
-          <input class="form-control" type="text" formControlName="street">
-        </div>
-        <div class="input-group mb-3">
-          <label class="input-group-text col-2">Housenumber:</label>
-          <input class="form-control" type="number" formControlName="houseNumber">
-        </div>
-        <div class="input-group mb-3">
-          <label class="input-group-text col-2">Zipcode:</label>
-          <input class="form-control" type="text" formControlName="zipCode">
-        </div>
-        <div class="input-group mb-3">
-          <label class="input-group-text col-2">Place:</label>
-          <input class="form-control" type="text" formControlName="place">
-        </div>
-        <div class="input-group mb-3">
-          <label class="input-group-text col-2">Phonenumber:</label>
-          <input class="form-control" type="tel" formControlName="phoneNumber">
-        </div>
-        <div class="d-flex justify-content-end flex-grow-1">
-          <button class="btn btn-primary col-2">Edit</button>
-        </div>
-      </form>
+      <div class="card-body">
+        <form [formGroup]="userForm" (ngSubmit)="editUser()" *ngIf="userForm">
+          <div class="input-group mb-3">
+            <label class="input-group-text col-4 col-md-2">First name</label>
+            <input
+              [ngClass]="{'is-invalid': userForm.controls['firstName'].invalid && userForm.controls['firstName'].dirty}"
+              class="form-control" type="text" formControlName="firstName">
+            <div
+              *ngIf="userForm.controls['firstName'].errors?.['required'] && userForm.controls['firstName'].dirty"
+              class="invalid-feedback">
+              <p>First name can't be empty</p>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text col-4 col-md-2">Prefix</label>
+            <input class="form-control" type="text" formControlName="prefix">
+          </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text col-4 col-md-2">Last name</label>
+            <input
+              [ngClass]="{'is-invalid': userForm.controls['lastName'].invalid && userForm.controls['lastName'].dirty}"
+              class="form-control" type="text" formControlName="lastName">
+            <div
+              *ngIf="userForm.controls['lastName'].errors?.['required'] && userForm.controls['lastName'].dirty"
+              class="invalid-feedback">
+              <p>Last name can't be empty</p>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text col-4 col-md-2">Street</label>
+            <input [ngClass]="{'is-invalid': userForm.controls['street'].invalid && userForm.controls['street'].dirty}"
+                   class="form-control" type="text" formControlName="street">
+            <div
+              *ngIf="userForm.controls['street'].errors?.['required'] && userForm.controls['street'].dirty"
+              class="invalid-feedback">
+              <p>Street can't be empty</p>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text col-4 col-md-2">House Nr.</label>
+            <input
+              [ngClass]="{'is-invalid': userForm.controls['houseNumber'].invalid && userForm.controls['houseNumber'].dirty}"
+              class="form-control" type="number" formControlName="houseNumber">
+            <div
+              *ngIf="userForm.controls['houseNumber'].errors?.['required'] && userForm.controls['houseNumber'].dirty "
+              class="invalid-feedback">
+              <p>Housenumber can't be empty</p>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text col-4 col-md-2">Zipcode</label>
+            <input
+              [ngClass]="{'is-invalid': userForm.controls['zipCode'].invalid && userForm.controls['zipCode'].dirty}"
+              class="form-control" type="text" formControlName="zipCode">
+            <div *ngIf="userForm.controls['zipCode'].errors?.['required']" class="invalid-feedback">
+              <p>Zip code can't be empty</p>
+            </div>
+            <div *ngIf="userForm.controls['zipCode'].errors?.['pattern']" class="invalid-feedback">
+              <p>Zip code is in the wrong format!</p>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text col-4 col-md-2">Place</label>
+            <input [ngClass]="{'is-invalid': userForm.controls['place'].invalid && userForm.controls['place'].dirty}"
+                   class="form-control" type="text" formControlName="place">
+          </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text col-4 col-md-2">Phone Nr.</label>
+            <input
+              [ngClass]="{'is-invalid': userForm.controls['phoneNumber'].invalid && userForm.controls['phoneNumber'].dirty}"
+              class="form-control" type="tel" formControlName="phoneNumber">
+          </div>
+          <div class="d-flex justify-content-end flex-grow-1">
+            <button class="btn btn-primary col-4 col-md-2" [disabled]="userForm.invalid">Edit</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
