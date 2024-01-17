@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {LoginCredentials} from "../models/LoginCredentials";
 import {SingupRequest} from "../models/SingupRequest";
 import {Router} from "@angular/router";
-import {environment, environmentDev} from "../../environments/environment.prod";
+import {environment} from "../../environments/environment.prod";
 
 const AUTH_API =  environment.API_URL + environment.AUTH;
 

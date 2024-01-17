@@ -2,11 +2,10 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {Product} from "../models/Product.model";
 import {HttpClient} from "@angular/common/http";
-import {environment, environmentDev} from "../../environments/environment.prod";
+import {environment} from "../../environments/environment.prod";
 
-// const PRODUCT_API: string = environment.API_URL +environment.PRODUCTS;
+const PRODUCT_API: string = environment.API_URL +environment.PRODUCTS;
 
-const PRODUCT_API: string = "http://localhost:8080/api/products/";
 
 @Injectable({
   providedIn: 'root'
