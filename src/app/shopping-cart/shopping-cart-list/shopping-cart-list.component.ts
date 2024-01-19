@@ -19,7 +19,9 @@ export class ShoppingCartListComponent {
   checkQuantity(index: number) {
     if (this.shoppingCart.at(index)!.quantity === 0) {
       this.shoppingCart.splice(index, 1)
-      this.shoppingCartService.sendCartStatus(true);
+      if (this.shoppingCart.length <= 0) {
+        this.shoppingCartService.sendCartStatus(true);
+      }
     }
   }
 }

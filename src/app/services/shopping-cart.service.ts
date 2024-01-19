@@ -6,6 +6,7 @@ import {ShoppingCartItem} from "../models/ShoppingCartItem";
 import {UserService} from "./user.service";
 import {BehaviorSubject} from "rxjs";
 import {environment} from "../../environments/environment.prod";
+import {CartOrder} from "../models/CartOrder";
 
 
 const ORDER_API: string = environment.API_URL + environment.ORDERS;
@@ -19,7 +20,7 @@ export class ShoppingCartService {
 
   private _cartItem: ShoppingCartItem;
 
-  order: Order;
+  order: CartOrder;
 
   isCartEmpty: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
@@ -40,13 +41,13 @@ export class ShoppingCartService {
     this._cartItem.quantity = 1;
     this._cartItem.price = product.price;
     this._shoppingCart.push(this._cartItem);
-    if (this.isCartEmpty)
+    if (this._shoppingCart.length >= 1 )
       this.sendCartStatus(false);
   }
 
   createOrder() {
-    this.order = new Order();
-    this.order.order.products = this._shoppingCart;
+    this.order = new CartOrder()
+    this.order.products = this._shoppingCart;
   }
 
   postOrder() {
