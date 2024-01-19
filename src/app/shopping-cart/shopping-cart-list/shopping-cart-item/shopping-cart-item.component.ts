@@ -27,6 +27,6 @@ export class ShoppingCartItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.item.total! = this.item.price!;
+    this.item.total! = this.item.price! * this.item.quantity!;
   }
 }
