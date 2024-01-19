@@ -7,6 +7,7 @@ import {UserService} from "./user.service";
 import {BehaviorSubject} from "rxjs";
 import {environment} from "../../environments/environment.prod";
 import {CartOrder} from "../models/CartOrder";
+import {ToastrService} from "ngx-toastr";
 
 
 const ORDER_API: string = environment.API_URL + environment.ORDERS;
@@ -24,7 +25,7 @@ export class ShoppingCartService {
 
   isCartEmpty: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
   sendCartStatus(value: boolean) {
@@ -40,8 +41,15 @@ export class ShoppingCartService {
     this._cartItem.product_name = product.product_name;
     this._cartItem.quantity = 1;
     this._cartItem.price = product.price;
-    this._shoppingCart.push(this._cartItem);
-    if (this._shoppingCart.length >= 1 )
+    if (this._shoppingCart.find(item => item.product_name === this._cartItem.product_name)){
+      this.toastr.error("Product already added to shopping cart!", "Product not added", {timeOut: 1000})
+    }
+    else {
+      this._shoppingCart.push(this._cartItem);
+      this.toastr.success("Product added to shopping cart!", "Product added", {timeOut: 1000})
+    }
+
+    if (this._shoppingCart.length >= 1)
       this.sendCartStatus(false);
   }
 

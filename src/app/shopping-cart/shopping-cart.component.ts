@@ -14,14 +14,15 @@ import {Router} from "@angular/router";
 export class ShoppingCartComponent implements OnInit {
   cartSubscription: Subscription;
   isCartEmpty: boolean
+  loginSubscription: Subscription
 
   constructor(private shoppingCartService: ShoppingCartService, private router: Router,
               private toastr: ToastrService, private auth: AuthService) {
   }
 
   placeOrder() {
-    this.auth.getLoginStatus().subscribe((val) => {
-        if (val) {
+    this.loginSubscription = this.auth.getLoginStatus().subscribe((val) => {
+        if (val && localStorage.getItem('token') != null) {
           this.shoppingCartService.postOrder().subscribe({
             next: () => {
               this.toastr.success("Order placed!")
@@ -33,12 +34,13 @@ export class ShoppingCartComponent implements OnInit {
               }
             }
           });
-        } else {
+        } else{
           this.toastr.info("You have to register first to be able to place an order")
           this.router.navigate(['/register'])
         }
       }
     )
+    this.loginSubscription.unsubscribe();
 
   }
 
@@ -51,5 +53,6 @@ export class ShoppingCartComponent implements OnInit {
 
   ngOnDestroy() {
     this.cartSubscription.unsubscribe()
+
   }
 }

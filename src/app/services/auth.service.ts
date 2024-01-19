@@ -23,7 +23,6 @@ export class AuthService {
 
   private _roles: string[];
 
-  key: string = "secretKey";
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -50,7 +49,7 @@ export class AuthService {
   }
 
   userIsLoggedIn() {
-    if (localStorage.getItem('authToken')) {
+    if (localStorage.getItem('token')) {
       this.sendLoginStatus(true)
     } else {
       this.sendLoginStatus(false)
@@ -66,14 +65,6 @@ export class AuthService {
     return this.isLoggedInSubject.asObservable();
   }
 
-  //
-  // sendAdmin() {
-  //   if (this.decryptRoles(localStorage.getItem('role')!) === "ROLE_ADMIN") {
-  //     this._isAdmin.next(true);
-  //   } else {
-  //     this._isAdmin.next(false)
-  //   }
-  // }
 
   getAdmin() {
     return this._isAdmin.asObservable()

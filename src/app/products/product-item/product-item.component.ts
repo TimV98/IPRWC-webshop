@@ -17,7 +17,6 @@ export class ProductItemComponent {
 
   convertProductToCartItem() {
     this.shoppingCartService.convertProductToCartItem(this.product)
-    this.toastr.success("Product added to shopping cart!", "Product added", {timeOut: 1000})
   }
 
 }
